@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="王佳蕾">
+  <meta name="Keywords" content="计算器">
+  <meta name="Description" content="自己手动实现计算器">
+  <title>calc</title>
+  <style type="text/css">
+	#calc{
+		width:600px;
+		height:520px;
+		position:absolute;
+		margin:auto;
+		left:0;
+		right:0;
+		top:0;
+		bottom:0;
+		background:#c0c0c0;
+		border:4px solid black;
+	}
+	p{
+		text-align:center;
+		font-size:14px;
+		font-weight:bold;
+	}
+	#show{
+		width:540px;
+		height:50px;
+		border:4px solid black;
+		margin-right:30px;
+		margin-left:30px;
+		text-align:right;
+		font-size:36px;
+		font-weight:bold;
+	}
+	#keyboard{
+		position:relative;
+		width:540px;
+		margin:30px;
+		overflow:auto;
+	}
+	#keyboard div.number{
+		float:left;
+		margin-right:40px;
+	}
+	#keyboard div.operator{
+		float:left;
+	}
+	.block{
+		line-height:50px;
+		padding:5px;
+		margin-bottom:2px;
+	}
+	button{
+		height:80px;
+		width:80px;
+		font-size:64px;
+		color:white;
+		background:black;
+		margin-right:10px;
+		border:1px solid white;
+		 -moz-border-radius:10px;
+		 -webkit-border-radius:10px;
+		 border-radius:10px;
+		 -moz-box-shadow:2px 2px 2px #c0c0c0;
+		 -webkit-box-shadow:2px 2px 2px #c0c0c0;
+		 box-shadow:2px 2px 2px #c0c0c0;
+	}
+    
+	button:hover,button:selected{
+		background:white;
+		color:black;
+	}
+	.oper{
+		height:80px;
+		width:80px;
+		font-size:64px;
+		color:white;
+		background:black;
+		margin-right:10px;
+		border:1px solid white;
+		 -moz-border-radius:10px;
+		 -webkit-border-radius:10px;
+		 border-radius:10px;
+		 -moz-box-shadow:2px 2px 2px #c0c0c0;
+		 -webkit-box-shadow:2px 2px 2px #c0c0c0;
+		 box-shadow:2px 2px 2px #c0c0c0;
+	}
+    .oper:hover{
+		background:white;
+		color:black;
+	}
+  </style>
+  <script type="text/javascript">
+	window.onload=function(){
+		var str="";
+		var result=0;
+		var operator="";
+		oButton=document.getElementsByTagName("button");
+		show=document.getElementById("show");
+		oEqual=document.getElementById("equal");
+		oAdd=document.getElementById("add");
+		oSub=document.getElementById("substract");
+		oMul=document.getElementById("multiply");
+		oDiv=document.getElementById("divide");
+		oYu=document.getElementById("yu");
+		oClear=document.getElementById("clear");
+		oBack=document.getElementById("back");
+		function number(){
+			str=str+this.innerHTML;
+			show.value=str;
+		}
+		for(var i=0,len=oButton.length;i<len;i++){
+			oButton[i].onclick=number;
+		}
+		function compute(){
+			if(operator==""){
+				result=parseFloat(str);
+			}else{
+				if(operator=="*"){
+					result=result*parseFloat(str);
+				}else if(operator=="/"){
+                    result=result/parseFloat(str);
+				}else if(operator=="+"){
+					result=result+parseFloat(str);
+				}else if(operator=="-"){
+					result=result-parseFloat(str);
+				}else if(operator=="%"){
+					result=result%parseFloat(str);
+				}else if(operator="x"){
+                    result=result;
+				}
+
+			}
+            str="";
+			console.log(operator);
+			console.log(result);
+			show.value=result.toString();
+		}
+	   oEqual.onclick=function(){
+		   compute();
+		   operator="x";
+	   }
+	   oAdd.onclick=function(){
+		   compute();
+		   operator="+";
+	   }
+	   oSub.onclick=function(){
+		   compute();
+		   operator="-";
+	   }
+	   oMul.onclick=function(){
+		   compute();
+		   operator="*";
+	   }
+	   oDiv.onclick=function(){
+		   compute();
+		   operator="/";
+	   }
+	   oYu.onclick=function(){
+		   compute();
+		   operator="%";
+	   }
+	   oClear.onclick=function(){
+		   result=0;
+           str="";
+		   operator="";
+		   show.value=0;
+	   }
+	   oBack.onclick=function(){
+           str=str.substring(0,str.length-1)
+		   if(str==""){
+			   show.value="0";
+		   }else{
+		   show.value=str;
+		   }
+	   }
+	}
+  </script>
+ </head>
+ <body>
+	<div id="calc">
+		<p>王佳蕾的计算器</p>
+		<input id="show" type="text" value="0"/>
+		<div id="keyboard">
+			<div class="number">
+				<div class="block">
+					<button>9</button>
+					<button>8</button>
+					<button>7</button>
+				</div>
+				<div class="block">
+					<button>6</button>
+					<button>5</button>
+					<button>4</button>
+				</div>
+				<div class="block">
+					<button>3</button>
+					<button>2</button>
+					<button>1</button>
+				</div>
+				<div class="block">
+					<button>0</button>
+					<button>00</button>
+					<button>.</button>
+				</div>
+			</div>
+			<div class="operator">
+				<div class="block">
+					<input id="back" class="oper" type="button" value="<"/>
+					<input id="clear" class="oper" type="button" value="C"/>
+				</div>
+				<div class="block">
+					<input id="add" class="oper" type="button" value="+"/>
+					<input id="substract" class="oper" type="button" value="-"/>
+				</div>
+				<div class="block">
+					<input id="multiply" class="oper" type="button" value="*"/>
+					<input id="divide" class="oper" type="button" value="/"/>
+				</div>
+				<div class="block">
+					<input id="yu" class="oper" type="button" value="%"/>
+					<input id="equal" class="oper" type="button" value="="/>
+				</div>
+			</div>
+		</div>
+	</div>
+ </body>
+</html>
